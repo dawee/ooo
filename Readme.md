@@ -1,25 +1,48 @@
 # ooo
 
-  Simple bridge from callback system to EventEmitter
+  Another async pattern for node, based on EventEmmitter
 
 ## Installation
 
 ```bash
 $ npm install ooo
 ```
+
 ## How to
+
+### Basics
+
+```js
+// Bind an event
+ooo('echo', function (msg) {
+    console.log(msg);    
+});
+
+// Fire an event
+ooo('echo')('Hello World !');
+```
+### Bridges
 
 ```js
 var ooo = require('./index.js');
 var fs = require('fs');
 
-ooo.on('file:read', function (err, data, msg) {
-    console.log(msg, data.toString());
+ooo('file:read', function (err, data) {
+    console.log(data.toString());
 });
 
-ooo.on('app:start', function () {
-    fs.readFile('index.js', ooo('file:read').after('index.js data :'));
+fs.readFile('index.js', ooo('file:read'));
+```
+
+### Insert parameters
+
+```js
+var ooo = require('./index.js');
+var fs = require('fs');
+
+ooo('file:read', function (msg1, err, data, msg2) {
+    console.log(msg1, data.toString(), msg2);
 });
 
-ooo.emit('app:start');
+fs.readFile('index.js', ooo('file:read').before('Here is the file').after('Good bye !'));
 ```

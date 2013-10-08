@@ -9,14 +9,15 @@ function ooo(ev, cb) {
     var before = [],
         after = [];
 
-    if (!!cb) {
-        emitter.on(ev, cb);
+    if (typeof cb === 'function') {
+        return emitter.on(ev, cb);
     }
 
     var wrap = function () {
         var args = before.concat(array(arguments), after);
         args.unshift(ev);
-        emitter.emit.apply(ooo, args);
+        console.log(args);
+        emitter.emit.apply(emitter, args);
     };
 
     wrap.before = function () {
