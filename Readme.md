@@ -21,6 +21,7 @@ ooo('echo', function (msg) {
 // Fire an event
 ooo('echo')('Hello World !');
 ```
+
 ### Bridges
 
 ```js

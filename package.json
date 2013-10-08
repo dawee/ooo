@@ -1,7 +1,7 @@
 {
   "name": "ooo",
-  "version": "0.0.3",
-  "description": "Simple Callback-to-EventEmitter bridge",
+  "version": "0.0.4",
+  "description": "Another async pattern for node, based on EventEmmitter",
   "main": "index.js",
   "repository": {
     "type": "git",
