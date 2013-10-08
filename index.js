@@ -5,14 +5,18 @@ function array(args) {
     return Array.prototype.slice.call(args, 0)
 };
 
-function ooo(ev) {
+function ooo(ev, cb) {
     var before = [],
         after = [];
+
+    if (!!cb) {
+        emitter.on(ev, cb);
+    }
 
     var wrap = function () {
         var args = before.concat(array(arguments), after);
         args.unshift(ev);
-        ooo.emit.apply(ooo, args);
+        emitter.emit.apply(ooo, args);
     };
 
     wrap.before = function () {
@@ -27,8 +31,5 @@ function ooo(ev) {
 
     return wrap;
 };
-
-ooo.on = emitter.on;
-ooo.emit = emitter.emit;
 
 module.exports = ooo;
