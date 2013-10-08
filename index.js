@@ -1,36 +1,55 @@
 var EventEmitter = require('events').EventEmitter;
-var emitter = new EventEmitter();
+var them = {};
 
 function array(args) {
     return Array.prototype.slice.call(args, 0)
 };
 
-function ooo(ev, cb) {
-    var before = [],
-        after = [];
+function create() {
+    
+    var emitter = new EventEmitter();
 
-    if (typeof cb === 'function') {
-        return emitter.on(ev, cb);
-    }
+    function ooo(ev, cb) {
+        var before = [],
+            after = [];
 
-    var wrap = function () {
-        var args = before.concat(array(arguments), after);
-        args.unshift(ev);
-        console.log(args);
-        emitter.emit.apply(emitter, args);
-    };
+        if (typeof cb === 'function') {
+            return emitter.on(ev, cb);
+        }
 
-    wrap.before = function () {
-        before = array(arguments);
+        var wrap = function () {
+            var args = before.concat(array(arguments), after);
+            args.unshift(ev);
+            console.log(args);
+            emitter.emit.apply(emitter, args);
+        };
+
+        wrap.before = function () {
+            before = array(arguments);
+            return wrap;
+        };
+
+        wrap.after = function () {
+            after = array(arguments);
+            return wrap;
+        };
+
         return wrap;
     };
 
-    wrap.after = function () {
-        after = array(arguments);
-        return wrap;
+    ooo.it = function (name) {
+        if (!them.hasOwnProperty(name)) {
+            them[name] = create();
+        }
+        return them[name];
     };
 
-    return wrap;
-};
+    ooo.emitter = function (obj) {
+        emitter = obj;
+        return ooo;
+    };
 
-module.exports = ooo;
+    return ooo;
+}
+
+module.exports = create();
