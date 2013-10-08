@@ -1,0 +1,22 @@
+{
+  "name": "ooo",
+  "version": "0.0.1",
+  "description": "Simple Callback-to-EventEmitter bridge",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dawicorti/ooo.git"
+  },
+  "keywords": [
+    "eventemitter",
+    "event",
+    "callback",
+    "async",
+    "bridge"
+  ],
+  "author": "David Corticchiato",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/dawicorti/ooo/issues"
+  }
+}
