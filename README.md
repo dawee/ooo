@@ -29,7 +29,7 @@ ooo('echo')('Hello World !');
 ### Bridges
 
 ```js
-var ooo = require('./index.js');
+var ooo = require('ooo');
 var fs = require('fs');
 
 ooo('file:read', function (err, data) {
@@ -42,7 +42,7 @@ fs.readFile('index.js', ooo('file:read'));
 ### Insert parameters
 
 ```js
-var ooo = require('./index.js');
+var ooo = require('ooo');
 var fs = require('fs');
 
 ooo('file:read', function (msg1, err, data, msg2) {

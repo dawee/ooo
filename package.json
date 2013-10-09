@@ -1,6 +1,6 @@
 {
   "name": "ooo",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Another async pattern for node, based on EventEmmitter",
   "main": "index.js",
   "repository": {
