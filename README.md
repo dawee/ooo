@@ -14,9 +14,7 @@ $ npm install ooo
 
 ```js
 // Bind an event
-ooo('echo', function (msg) {
-    console.log(msg);    
-});
+ooo('echo', console.log);
 
 // Bind an event, juste once
 ooo('echo!', function (msg) {
