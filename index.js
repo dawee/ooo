@@ -6,22 +6,30 @@ function array(args) {
 };
 
 function create() {
-    
-    var emitter = new EventEmitter();
+    var any = {before: [], after: []},
+        emitter = new EventEmitter();
 
-    function ooo(ev, cb) {
-        var before = [],
-            after = [];
+    function ooo() {
+        var evs = array(arguments);
 
-        if (typeof cb === 'function') {
-            return emitter.on(ev, cb);
+        var before = any.before.slice(0),
+            after = any.after.slice(0);
+
+        if (typeof evs[evs.length - 1] === 'function') {
+            var cb = evs[evs.length - 1],
+                evs = evs.slice(0, evs.length - 1);
+            evs.forEach(function (ev) {
+                emitter.on(ev, cb);
+            });
         }
 
         var wrap = function () {
-            var args = before.concat(array(arguments), after);
-            args.unshift(ev);
-            console.log(args);
-            emitter.emit.apply(emitter, args);
+            var all = {args: before.concat(array(arguments), after)};
+            evs.forEach(function (ev) {
+                var args = all.args.slice(0);
+                args.unshift(ev);
+                emitter.emit.apply(emitter, args);
+            });
         };
 
         wrap.before = function () {
@@ -46,6 +54,16 @@ function create() {
 
     ooo.emitter = function (obj) {
         emitter = obj;
+        return ooo;
+    };
+
+    ooo.before = function () {
+        any.before = array(arguments);
+        return ooo;
+    };
+
+    ooo.after = function () {
+        any.after = array(arguments);
         return ooo;
     };
 
