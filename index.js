@@ -18,8 +18,9 @@ function create() {
         if (typeof evs[evs.length - 1] === 'function') {
             var cb = evs[evs.length - 1],
                 evs = evs.slice(0, evs.length - 1);
+            
             evs.forEach(function (ev) {
-                emitter.on(ev, cb);
+                (emitter[ev.match('.*!$') ? 'once' : 'on'])(ev.replace(/!$/, ''), cb);
             });
         }
 
@@ -27,7 +28,7 @@ function create() {
             var all = {args: before.concat(array(arguments), after)};
             evs.forEach(function (ev) {
                 var args = all.args.slice(0);
-                args.unshift(ev);
+                args.unshift(ev.replace(/!$/, ''));
                 emitter.emit.apply(emitter, args);
             });
         };

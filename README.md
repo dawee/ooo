@@ -18,6 +18,12 @@ ooo('echo', function (msg) {
     console.log(msg);    
 });
 
+// Bind an event, juste once
+ooo('echo!', function (msg) {
+    console.log(msg);    
+});
+
+
 // Fire an event
 ooo('echo')('Hello World !');
 ```
